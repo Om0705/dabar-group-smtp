@@ -168,7 +168,7 @@ func SendInquiryHandler(c *gin.Context) {
 		log.Printf("smtp send: %v", err)
 		payload := gin.H{
 			"success": false,
-			"message": "Failed to send email",
+			"message": "Failed to send email with port " + strconv.Itoa(smtpPort),
 			"error":   err.Error(),
 		}
 		if gin.Mode() != gin.ReleaseMode {
