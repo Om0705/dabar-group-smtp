@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"crypto/tls"
+	// "crypto/tls"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -145,7 +145,7 @@ func SendInquiryHandler(c *gin.Context) {
 	m := gomail.NewMessage()
 
 	m.SetHeader("From", smtpUser)
-	m.SetHeader("To", smtpUser)
+	m.SetHeader("To", "info@dabargroup.com")
 	m.SetHeader("Reply-To", req.Email)
 	m.SetHeader("Subject", "New Inquiry - "+req.Subject)
 
@@ -160,9 +160,9 @@ func SendInquiryHandler(c *gin.Context) {
 
 	d.SSL = false
 
-	d.TLSConfig = &tls.Config{
-		InsecureSkipVerify: true,
-	}
+	// d.TLSConfig = &tls.Config{
+	// 	InsecureSkipVerify: true,
+	// }
 
 	if err := d.DialAndSend(m); err != nil {
 		log.Printf("smtp send: %v", err)
