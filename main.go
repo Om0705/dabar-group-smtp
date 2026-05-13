@@ -8,6 +8,8 @@ import (
 	"strconv"
 	"strings"
 
+	"crypto/tls"
+
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -156,15 +158,11 @@ func SendInquiryHandler(c *gin.Context) {
 		smtpPass,
 	)
 
-	// Port 465 typically uses implicit TLS (SSL). Port 587 uses STARTTLS (SSL=false in gomail).
-	ssl := smtpPort == 465
-	switch strings.ToLower(strings.TrimSpace(os.Getenv("SMTP_SSL"))) {
-	case "true", "1", "yes":
-		ssl = true
-	case "false", "0", "no":
-		ssl = false
+	d.SSL = true
+
+	d.TLSConfig = &tls.Config{
+		InsecureSkipVerify: true,
 	}
-	d.SSL = ssl
 
 	if err := d.DialAndSend(m); err != nil {
 		log.Printf("smtp send: %v", err)
