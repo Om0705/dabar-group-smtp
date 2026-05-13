@@ -109,7 +109,7 @@ func SendInquiryHandler(c *gin.Context) {
 	}
 
 	smtpHost := os.Getenv("SMTP_HOST")
-	smtpPort := 465
+	smtpPort := 587
 	if v := strings.TrimSpace(os.Getenv("SMTP_PORT")); v != "" {
 		if n, err := strconv.Atoi(v); err == nil && n > 0 {
 			smtpPort = n
@@ -158,7 +158,7 @@ func SendInquiryHandler(c *gin.Context) {
 		smtpPass,
 	)
 
-	d.SSL = true
+	d.SSL = false
 
 	d.TLSConfig = &tls.Config{
 		InsecureSkipVerify: true,
