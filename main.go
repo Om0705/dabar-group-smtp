@@ -169,6 +169,7 @@ func SendInquiryHandler(c *gin.Context) {
 		payload := gin.H{
 			"success": false,
 			"message": "Failed to send email",
+			"error":   err.Error(),
 		}
 		if gin.Mode() != gin.ReleaseMode {
 			payload["error"] = err.Error()
